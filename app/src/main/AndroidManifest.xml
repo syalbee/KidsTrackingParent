@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KidsTrackingParent">
         <activity
+            android:name=".Activity.DetailActivity"
+            android:exported="true" />
+        <activity
             android:name=".Activity.HomeActivity"
             android:exported="true" />
         <activity

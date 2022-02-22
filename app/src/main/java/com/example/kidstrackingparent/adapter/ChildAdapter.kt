@@ -2,6 +2,8 @@ package com.example.kidstrackingparent.adapter
 
 
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +11,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.kidstrackingparent.Activity.DetailActivity
 import com.example.kidstrackingparent.R
 import com.example.kidstrackingparent.dataClass.Childs
 
-class ChildAdapter(private val childList : ArrayList<Childs>) : RecyclerView.Adapter<ChildAdapter.MyViewHolder>(){
+class ChildAdapter(var c: Context, private val childList : ArrayList<Childs>) : RecyclerView.Adapter<ChildAdapter.MyViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
@@ -30,6 +33,13 @@ class ChildAdapter(private val childList : ArrayList<Childs>) : RecyclerView.Ada
             .load(currentitem.photoUrl)
             .centerCrop()
             .into(holder.ivchild)
+
+        holder.itemView.setOnClickListener {
+            val mIntent = Intent(c, DetailActivity::class.java)
+            mIntent.putExtra("img", currentitem.photoUrl)
+            mIntent.putExtra("name", currentitem.name)
+            c.startActivity(mIntent)
+        }
 
     }
 
