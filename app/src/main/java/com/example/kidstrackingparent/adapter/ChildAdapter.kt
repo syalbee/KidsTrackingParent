@@ -36,8 +36,7 @@ class ChildAdapter(var c: Context, private val childList : ArrayList<Childs>) : 
 
         holder.itemView.setOnClickListener {
             val mIntent = Intent(c, DetailActivity::class.java)
-            mIntent.putExtra("img", currentitem.photoUrl)
-            mIntent.putExtra("name", currentitem.name)
+            mIntent.putExtra("uid", currentitem.uid)
             c.startActivity(mIntent)
         }
 
