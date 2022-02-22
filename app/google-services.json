@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "915121978428",
+    "firebase_url": "https://kidstrack-fe41c-default-rtdb.firebaseio.com",
+    "project_id": "kidstrack-fe41c",
+    "storage_bucket": "kidstrack-fe41c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915121978428:android:11e3ae32797233cd0bd739",
+        "android_client_info": {
+          "package_name": "com.example.kidstrackingparent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "915121978428-h948d9tj5fqhl38dnl6q18oc2qickh4i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kidstrackingparent",
+            "certificate_hash": "4359013ab68b84ae560e68abc900ea4cb8c95a5b"
+          }
+        },
+        {
+          "client_id": "915121978428-u1mpdob36r3t3lj3lqgo2o9304cgn3qd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7sHAx6NubePSEJ3Krhg7K-KFe32hqhcg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "915121978428-u1mpdob36r3t3lj3lqgo2o9304cgn3qd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
