@@ -39,14 +39,13 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         Mapbox.getInstance(this, BuildConfig.MAPBOX_ACCESS_TOKEN)
         setContentView(R.layout.activity_detail)
         listAnak = ArrayList()
-
         
         map_view.onCreate(savedInstanceState)
         map_view.getMapAsync(this)
 
     }
 
-    private fun getChilddata(uid: String?) {
+    private fun getChilddata(uid: String?, map: MapboxMap) {
         dbref = FirebaseDatabase.getInstance().getReference()
             .child("Users")
             .child("Childs")
@@ -59,6 +58,34 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
                     tvPosition.text = childData?.position.toString()
                     tvLastupdate.text = childData?.lastUpdate.toString()
+                    println(childData?.lon)
+
+                    var lat : Double = childData?.lat!!.toDouble()
+                    var lon : Double = childData?.lon!!.toDouble()
+
+                    val symbolLayers = ArrayList<Feature>()
+                    symbolLayers.add(Feature.fromGeometry(Point.fromLngLat(lon, lat))) //remember to reverse LatLng
+                    map.setStyle(
+                        Style.Builder().fromUri(Style.MAPBOX_STREETS)
+                            .withImage(ICON_ID, BitmapUtils
+                                .getBitmapFromDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.mapbox_marker_icon_default))!!)
+                            .withSource(GeoJsonSource(SOURCE_ID, FeatureCollection.fromFeatures(symbolLayers)))
+                            .withLayer(
+                                SymbolLayer(LAYER_ID, SOURCE_ID)
+                                    .withProperties(iconImage(ICON_ID),
+                                        PropertyFactory.iconSize(1.0f),
+                                        PropertyFactory.iconAllowOverlap(true),
+                                        PropertyFactory.iconIgnorePlacement(true)
+                                    ))
+                    )
+                    {
+                        //Here is style loaded
+                    }
+
+                    //DEFAULT ZOOM , YOU CAN CUSTOME THIS
+                    val latLng = LatLng(lat,lon)
+                    val position = CameraPosition.Builder().target(latLng).zoom(13.0).tilt(10.0).build()
+                    map.animateCamera(CameraUpdateFactory.newCameraPosition(position))
 
 
                     Log.d("DetailActivity", "onDataChange: {${childData.toString()}}")
@@ -75,38 +102,14 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(mapboxMap: MapboxMap) {
         map = mapboxMap
         initAddMarker(map)
-
-        //DEFAULT ZOOM , YOU CAN CUSTOME THIS
-        val latLng = LatLng(-5.1670937,119.4796103)
-        val position = CameraPosition.Builder().target(latLng).zoom(13.0).tilt(10.0).build()
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(position))
     }
 
     private fun initAddMarker(map: MapboxMap) {
 
         val intentUid = intent.getStringExtra("uid")
-        println(getChilddata(intentUid))
+        println(getChilddata(intentUid, map))
 
-        val symbolLayers = ArrayList<Feature>()
-        symbolLayers.add(Feature.fromGeometry(Point.fromLngLat(119.4796103, -5.1670937))) //remember to reverse LatLng
-        map.setStyle(
-            Style.Builder().fromUri(Style.MAPBOX_STREETS)
-                .withImage(ICON_ID, BitmapUtils
-                    .getBitmapFromDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.mapbox_marker_icon_default))!!)
-                .withSource(GeoJsonSource(SOURCE_ID, FeatureCollection.fromFeatures(symbolLayers)))
-                .withLayer(
-                    SymbolLayer(LAYER_ID, SOURCE_ID)
-                    .withProperties(iconImage(ICON_ID),
-                        PropertyFactory.iconSize(1.0f),
-                        PropertyFactory.iconAllowOverlap(true),
-                        PropertyFactory.iconIgnorePlacement(true)
-                    ))
-        )
-        {
-            //Here is style loaded
-        }
     }
-
 
     override fun onStart() {
         super.onStart()
