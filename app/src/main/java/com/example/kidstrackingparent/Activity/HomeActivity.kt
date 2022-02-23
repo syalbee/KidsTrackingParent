@@ -48,6 +48,12 @@ class HomeActivity : AppCompatActivity() {
             finish()
         }
 
+        fabHome.setOnClickListener {
+            val intentAdd = Intent(this, AddActivity::class.java)
+            startActivity(intentAdd)
+            finish()
+        }
+
     }
 
     private fun getUserData() {

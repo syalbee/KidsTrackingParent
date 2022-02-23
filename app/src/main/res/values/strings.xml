@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">KidsTrackingParent</string>
+    <string name="scan_anything">Scanning..</string>
 </resources>
